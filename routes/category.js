@@ -5,7 +5,7 @@ const {
     isAuth,
     isAdmin
 } = require("../controllers/auth");
-const { create } = require("../controllers/category");
+const { create ,categoryById,read,remove,update} = require("../controllers/category");
 const { userById } = require("../controllers/user");
 
 router.post(
@@ -14,6 +14,22 @@ router.post(
     isAuth,
     create
     );
+router.get("/category/:categoryId", read);
+router.put(
+    "/category/:categoryId/:userId", 
+    reqSignin ,
+    isAuth,
+    create
+    );
+router.delete(
+    "/category/:categoryId/:userId",
+    reqSignin, 
+    isAuth,
+    isAdmin,   
+    remove
+    );
+router.put("/category/:categoryId/:userId",reqSignin, isAuth,update);
+router.param("categoryId", categoryById);
 router.param("userId", userById);
 module.exports = router;
 
