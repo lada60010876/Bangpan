@@ -8,6 +8,7 @@ const {
     reqSignin 
 } = require("../controllers/auth");
 const { userSignupValidator } = require("../validator");
+const { userById } = require("../controllers/user");
 
 router.post("/signup", userSignupValidator, signup);
 router.post("/signin", signin);

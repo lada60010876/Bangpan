@@ -15,17 +15,22 @@ const productSchema = new mongoose.Schema(
         },
         status: {
             type:Number,
-            trim:true,
             default:0
         },
         category:{
             type:ObjectId,
-            ref:"category",
+            ref:"Category",
             required:true
         },
+        ownername:{
+            type:ObjectId,
+            ref:"User",
+            required:true
+        },
+       
         photo:{
             data:Buffer,
-            contentType:String
+            contentType:String,
         }
     },
     { timestamps: true }

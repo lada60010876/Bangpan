@@ -1,37 +1,14 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuidv1 =require("uuid/v1");
-const userShema =new mongoose.Schema(
+const userSchema =new mongoose.Schema(
     {
-    username:{
+    firstname:{
         type:String,
         trim:true,
         required:true,
         minlength:2,
         maxlength:32
-    },
-    email:{
-        type: String,
-        trim: true,
-        required: true,
-        unique: true
-    },
-    hashed_password:{
-        type:String,
-        required:true,
-
-    },firstname:{
-        type:String,
-        trim:true,
-        required:true,
-        minlength:2,
-        maxlength:32
-    },
-    middlename:{
-        type:String,
-        trim:true,
-        maxlength:32,
-        default:''
     },
     lastname:{
         type:String,
@@ -39,21 +16,35 @@ const userShema =new mongoose.Schema(
         required:true,
         minlength:2,
         maxlength:32
+    }, 
+    email:{
+        type: String,
+        trim: true,
+        required: true,
+        unique: true
+    },
+    username:{
+        type:String,
+        trim:true,
+        unique: true,
+        required:true,
+        minlength:2,
+        maxlength:32
+    },
+    hashed_password:{
+        type:String,
+        required:true,
+
     },
     address:{
         type:String,
-    },
-    address:{
-        type:String,
-    },
-    passcode:{
-        type:Number,
+        required:true,
+
     },
     phone:{
        type:Number,
         trim:true,
-   //    minlength:9,
-     //   maxlength:10
+        required:true,
     },
     about:{
         type:String,
@@ -62,7 +53,6 @@ const userShema =new mongoose.Schema(
     salt:String,
     role:{
         type:Number,
-        trim:true,
         default:0
     },
     history:{
@@ -75,18 +65,18 @@ const userShema =new mongoose.Schema(
 );
 
 //virtual field
-userShema
+userSchema
     .virtual('password')
     .set(function(password){
         this._password =password;
         this.salt=uuidv1();
         this.hashed_password = this.encryptPassword(password);
     })
-.get(function(){
-    return this._password
+    .get(function(){
+    return  this._password
 });
 
-userShema.methods ={
+userSchema.methods ={
     authenticate: function(plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;
     },
@@ -104,4 +94,4 @@ userShema.methods ={
     }
 };
 
-module.exports=mongoose.model("User",userShema);
+module.exports=mongoose.model("User",userSchema);

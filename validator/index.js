@@ -1,5 +1,6 @@
 exports.userSignupValidator = (req, res, next) => {
     req.check("username", "Username is required").notEmpty();
+
     req.check("username", "Username must be between 3 to 32 characters")
         .isLength({
             min: 4,

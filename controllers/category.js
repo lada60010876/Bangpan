@@ -53,7 +53,8 @@ exports.update = (req, res) => {
                     error: errorHandler(err)
                 });
             }
-            res.json(                {message:"update category success"}
+            res.json(                
+                {message:"update category success"}
             );
         });
    
